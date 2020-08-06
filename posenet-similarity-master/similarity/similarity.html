@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <!-- Load TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/posenet-similarity/dist/posenet-similarity.min.js"></script>
+    <!-- Load Posenet -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+    <!-- Load
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
+
+
+ posenet-similarity -->
+    
+
+
+ </head>
+
+  <body>
+    
+  <img id= 'pose1' src='https://www.yogajournal.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_620/MTQ2NDEyNTI4MjMzMDk2ODMx/anatomy_287_3321_bjk-standing.jpg'  crossorigin="anonymous"/>
+  
+  <img id='pose2' src='https://www.yogajournal.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_620/MTQ2NDEyNTI4MjMzMDk2ODMx/anatomy_287_3321_bjk-standing.jpg' crossorigin="anonymous" />
+</body>
+
+  <script>
+    var pose1ImageElement = document.getElementById('pose1');
+    var pose2ImageElement = document.getElementById('pose2');
+
+    // For more detailed Posenet setup, please refer its own document.
+    // Load Posenet model
+    posenet.load().then(function(net) {
+      // Estimate the two poses
+      return Promise.all([
+        net.estimateSinglePose(pose1ImageElement),
+        net.estimateSinglePose(pose2ImageElement)
+      ])
+    }).then(function(poses){
+      // Calculate the weighted distance between the two poses
+      var cosineSimilarity1 = pns.poseSimilarity(poses[0], poses[1],{ strategy: 'cosineSimilarity' });
+     var weightedDistance1 = pns.poseSimilarity(poses[0], poses[1],{ strategy: 'weightedDistance' });
+     var cosineDistance1 = pns.poseSimilarity(poses[0], poses[1],{ strategy: 'cosineDistance' });
+      cosineSimilarity = (cosineSimilarity1)
+      weightedDistance = (weightedDistance1)
+      cosineDistance= (cosineDistance1)
+      console.log( "Similarity score is for cosineSimilarity", cosineSimilarity )
+      console.log( "Similarity score is for weightedDistance", weightedDistance)
+      console.log( "Similarity score is for cosineDistance",   cosineDistance)
+ console.log(poses[0])
+ console.log(poses[1])
+    })
+  </script>
+</html>
+
